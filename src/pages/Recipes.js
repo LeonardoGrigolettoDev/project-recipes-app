@@ -9,29 +9,12 @@ import Footer from './Footer';
 
 function Recipes({ location: { pathname } }) {
   const { setResultsSearch, resultsSearch } = useContext(Context);
-  // const [initialReq] = useState([]);
   const [initialReqCategory, setInitialReqCategory] = useState([]);
-  // const [clickedAll, setClickedAll] = useState(false);
-  // const [currentFilter, setCurrentFilter] = useState('');
   const [test, setTest] = useState([]);
-  // const [myState, setMyState] = useState(false);
-  // const [sync, setSync] = useState(false);
 
   const limitedIndex12 = 12;
   const limitedIndex5 = 5;
   const verifyRouteMeals = pathname === '/meals';
-
-  // const handleToggle = async () => {
-  //   const req = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${test}`);
-  //   const data = await req.json();
-  //   let resultsSearchArray = [];
-  //   data.meals.forEach((element, index) => {
-  //     if (index < limitedIndex12) {
-  //       resultsSearchArray.push(element)
-  //     };
-  //     setResultsSearch(resultsSearchArray);
-  //   });
-  // }
 
   const handleFilterClickDrinks = async ({ target }) => {
     setTest(target.innerHTML);
@@ -43,7 +26,6 @@ function Recipes({ location: { pathname } }) {
         if (index < limitedIndex12) { (resultsSearchArray.push(element)); }
       });
       setResultsSearch(resultsSearchArray);
-      // setCurrentFilter(resultsSearchArray);
     }
   };
   const handleFilterClickMeals = async ({ target }) => {
@@ -56,22 +38,9 @@ function Recipes({ location: { pathname } }) {
         if (index < limitedIndex12) { (resultsSearchArray.push(element)); }
       });
       setResultsSearch(resultsSearchArray);
-      // setCurrentFilter(resultsSearchArray);
     }
   };
 
-  // const fetchFirstMeals = async () => {
-  //   const req = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-  //   const data = await req.json();
-  //   setInitialReq(data.meals);
-  //   // setSync(false)
-  // };
-  // const fetchFirstDrinks = async () => {
-  //   const req = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-  //   const data = await req.json();
-  //   setInitialReq(data.drinks);
-  //   // setSync(false)
-  // };
   const fetchCategoriesMeals = async () => {
     const req = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
     const data = await req.json();
@@ -108,7 +77,6 @@ function Recipes({ location: { pathname } }) {
 
   const getCategories = async (event) => {
     const { target } = event;
-    // data.meals.filter((element) => element === param)
     if (test === target.innerHTML) {
       allInitialRecipes();
       setTest('');
@@ -117,21 +85,13 @@ function Recipes({ location: { pathname } }) {
 
   useEffect(() => {
     if (pathname === '/meals') {
-      // fetchFirstMeals();
       allInitialRecipes();
       fetchCategoriesMeals();
     } else {
-      // fetchFirstDrinks();
       allInitialRecipes();
       fetchCategoriesDrinks();
     }
   }, [verifyRouteMeals, pathname]);
-
-  // useEffect(()=> {
-  //   if(clickedAll){
-  //     allInitialRecipes();
-  //   }
-  // }, [clickedAll])
 
   return (
     <div>
@@ -208,21 +168,6 @@ function Recipes({ location: { pathname } }) {
           )
       }
 
-      {/* {
-        initialReq.length !== 0 && verifyRouteMeals && resultsSearch.length === 0 ? (
-          initialReq.map((element, index) => (
-            index <= limitedIndex12 && (
-              <CardRecipes index={ index } e={ element } key={ element.idMeal } />
-            )
-          ))
-        )
-          : initialReq.map((element, index) => (
-            index <= limitedIndex12 && (
-              <CardRecipes index={ index } e={ element } key={ element.idDrink } />
-            )
-          ))
-
-      } */}
       <Footer />
     </div>
   );
